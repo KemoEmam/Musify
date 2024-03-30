@@ -37,8 +37,7 @@ class PauseResumeCubit extends Cubit<PauseResumeState> {
     await _audioPlayerService.updateSongDetails(songDetails);
     await _audioPlayerService
         .play(songDetails.songs[songDetails.selectedIndex].data);
-    emit(
-        PauseResumePlaying()); // Ensure this is called right after starting the song.
+    emit(PauseResumePlaying());
   }
 
   void initialize(SongDetailsModel songDetails) async {

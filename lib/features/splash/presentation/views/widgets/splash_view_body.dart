@@ -25,10 +25,11 @@ class _SplashViewState extends State<SplashViewBody>
   @override
   void initState() {
     super.initState();
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.white,
-      statusBarIconBrightness: Brightness.light,
-    ));
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+          statusBarColor: Colors.white,
+          statusBarIconBrightness: Brightness.light),
+    );
     _splashAnimation();
     _initializeThemeListener();
     _navigateToHome();

@@ -39,7 +39,23 @@ class PlaylistListViewWidget extends StatelessWidget {
                 );
               });
         } else if (state is FetchAllSongsFailure) {
-          return Center(child: Text(state.errMessage));
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(state.errMessage),
+                ElevatedButton(
+                  onPressed: () {
+                    BlocProvider.of<FetchAllSongsCubit>(context)
+                        .fetchAllSongs();
+                  },
+                  child: Text('Retry',
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.inversePrimary)),
+                ),
+              ],
+            ),
+          );
         } else {
           return const Center(child: CircularProgressIndicator());
         }

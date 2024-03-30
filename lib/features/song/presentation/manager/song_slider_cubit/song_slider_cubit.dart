@@ -23,12 +23,6 @@ class SongSliderCubit extends Cubit<SongSliderState> {
         _audioPlayerService.totalDuration, _isRepeatOn));
   }
 
-  @override
-  Future<void> close() {
-    _audioPlayerService.removeListener(_onAudioPlayerChange);
-    return super.close();
-  }
-
   void seek(double seconds) {
     _audioPlayerService.seek(Duration(seconds: seconds.toInt()));
   }
@@ -40,5 +34,11 @@ class SongSliderCubit extends Cubit<SongSliderState> {
     } else {
       _audioPlayerService.setRepeatMode(false);
     }
+  }
+
+  @override
+  Future<void> close() {
+    _audioPlayerService.removeListener(_onAudioPlayerChange);
+    return super.close();
   }
 }

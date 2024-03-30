@@ -21,14 +21,15 @@ class SongsItemWidget extends StatelessWidget {
           final isLiked =
               context.read<UpdateSongDetailsCubit>().isSongLiked(currentIndex);
           return SizedBox(
-            height: MediaQuery.of(context).size.height * 0.5,
+            height: MediaQuery.of(context).size.height * 0.51,
             width: MediaQuery.of(context).size.width * 0.83,
             child: NeuBoxWidget(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   QueryArtworkWidget(
-                    artworkHeight: MediaQuery.of(context).size.height * 0.35,
+                    //remove one of these
+                    artworkHeight: MediaQuery.of(context).size.height * 0.4,
                     format: ArtworkFormat.PNG,
                     artworkWidth: double.infinity,
                     artworkQuality: FilterQuality.high,
@@ -42,7 +43,7 @@ class SongsItemWidget extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 8, right: 4, top: 10),
+                    padding: const EdgeInsets.only(left: 8, right: 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -50,9 +51,9 @@ class SongsItemWidget extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.5,
+                              width: MediaQuery.of(context).size.width * 0.6,
                               child: Text(
-                                maxLines: 2,
+                                maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 currentSongDetails
                                     .songs[currentSongDetails.selectedIndex]

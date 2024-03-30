@@ -15,53 +15,61 @@ class SongSlideBarWidget extends StatelessWidget {
           final positionInSeconds = state.currentDuration.inSeconds.toDouble();
           final isRepeatOn = (state).isRepeatOn;
           return Padding(
-            padding: const EdgeInsets.only(top: 30),
-            child: Column(children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text(
-                    formatTime(Duration(seconds: positionInSeconds.toInt())),
-                    style: Styles.textStyle14,
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      BlocProvider.of<SongSliderCubit>(context).toggleRepeat();
-                    },
-                    icon: Icon(
-                      Icons.repeat,
-                      color: isRepeatOn ? Colors.teal : Colors.black,
+            padding: const EdgeInsets.only(top: 18, bottom: 2),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      formatTime(Duration(seconds: positionInSeconds.toInt())),
+                      style: Styles.textStyle14,
                     ),
-                  ),
-                  Text(
-                    formatTime(Duration(seconds: durationInSeconds.toInt())),
-                  )
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Opacity(
-                  opacity: .5,
-                  child: SliderTheme(
-                    data: SliderTheme.of(context).copyWith(
-                      thumbShape: const RoundSliderThumbShape(
-                        enabledThumbRadius: 0,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      child: IconButton(
+                        onPressed: () {
+                          BlocProvider.of<SongSliderCubit>(context)
+                              .toggleRepeat();
+                        },
+                        icon: Icon(
+                          Icons.repeat,
+                          color: isRepeatOn
+                              ? Colors.teal
+                              : Theme.of(context).colorScheme.inversePrimary,
+                        ),
                       ),
                     ),
-                    child: Slider(
-                      activeColor: Colors.teal,
-                      min: 0,
-                      max: durationInSeconds.toDouble(),
-                      value: positionInSeconds.clamp(
-                          0, durationInSeconds.toDouble()),
-                      onChanged: (double value) {
-                        BlocProvider.of<SongSliderCubit>(context).seek(value);
-                      },
+                    Text(
+                      formatTime(Duration(seconds: durationInSeconds.toInt())),
+                    )
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Opacity(
+                    opacity: .5,
+                    child: SliderTheme(
+                      data: SliderTheme.of(context).copyWith(
+                        thumbShape: const RoundSliderThumbShape(
+                          enabledThumbRadius: 0,
+                        ),
+                      ),
+                      child: Slider(
+                        activeColor: Colors.teal,
+                        min: 0,
+                        max: durationInSeconds.toDouble(),
+                        value: positionInSeconds.clamp(
+                            0, durationInSeconds.toDouble()),
+                        onChanged: (double value) {
+                          BlocProvider.of<SongSliderCubit>(context).seek(value);
+                        },
+                      ),
                     ),
                   ),
-                ),
-              )
-            ]),
+                )
+              ],
+            ),
           );
         }
         return const SizedBox();

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:musicfy/core/utils/app_routes.dart';
 import 'package:musicfy/core/utils/assets.dart';
+import 'package:musicfy/core/utils/styles.dart';
 import 'package:musicfy/features/home/presentation/views/widgets/custom_list_tile_widget.dart';
 
 class DrawerViewBody extends StatelessWidget {
@@ -32,6 +33,25 @@ class DrawerViewBody extends StatelessWidget {
               GoRouter.of(context).pop();
               GoRouter.of(context).push(AppRoutes.settingsRoute);
             },
+          ),
+          const Spacer(),
+          Opacity(
+            opacity: 0.3,
+            child: Text(
+              'Copyright ©2024 Karim El-Emam, Inc.',
+              style: Styles.textStyle14.copyWith(fontStyle: FontStyle.italic),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 20),
+            child: Opacity(
+              opacity: 0.3,
+              child: Text('All rights reserved, Musify™',
+                  style:
+                      Styles.textStyle14.copyWith(fontStyle: FontStyle.italic),
+                  textAlign: TextAlign.center),
+            ),
           ),
         ],
       ),

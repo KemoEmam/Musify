@@ -8,7 +8,7 @@ class SongsAppBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 22, bottom: 25),
+      padding: const EdgeInsets.only(top: 22, bottom: 15),
       child: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:musicfy/features/home/data/models/song_details_model.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
@@ -10,6 +10,9 @@ class AudioPlayerService {
   int _currentIndex = 0;
   bool isPlaying = false;
   SongDetailsModel? songDetails;
+
+  static const MethodChannel _channel =
+      MethodChannel('com.example.musicfy.audioplayer/audiofocus');
 
   final AudioPlayer _audioPlayer = AudioPlayer();
   Duration _totalDuration = Duration.zero;
@@ -24,8 +27,6 @@ class AudioPlayerService {
   static final AudioPlayerService _instance = AudioPlayerService._internal();
   factory AudioPlayerService() => _instance;
 
-  Timer? _throttleTimer;
-
   AudioPlayerService._internal() {
     _audioPlayer.onDurationChanged.listen((newDuration) {
       _totalDuration = newDuration;
@@ -33,10 +34,7 @@ class AudioPlayerService {
     });
     _audioPlayer.onPositionChanged.listen((newPosition) {
       _currentDuration = newPosition;
-      if (_throttleTimer?.isActive ?? false) return;
-      _throttleTimer = Timer(const Duration(milliseconds: 0), () {
-        _notifyListeners();
-      });
+      _notifyListeners();
     });
     _audioPlayer.onPlayerComplete.listen((event) {
       if (_isRepeatOn) {
@@ -72,14 +70,20 @@ class AudioPlayerService {
   }
 
   Future<void> play(String filePath) async {
-    await _audioPlayer.stop();
-    await _audioPlayer.play(DeviceFileSource(filePath));
+    final bool focusGranted = await _channel.invokeMethod('requestAudioFocus');
+    if (focusGranted) {
+      await _audioPlayer.stop();
+      await _audioPlayer.play(DeviceFileSource(filePath));
+      isPlaying = true;
+      _notifyListeners();
+    }
   }
 
   Future<void> pause() async {
     await _audioPlayer.pause();
     isPlaying = false;
     _notifyListeners();
+    await _channel.invokeMethod('abandonAudioFocus');
   }
 
   Future<void> resume() async {
@@ -99,19 +103,23 @@ class AudioPlayerService {
   Future<void> nextSong() async {
     if (_currentIndex + 1 < _songs.length) {
       _currentIndex++;
-      songDetails!.selectedIndex = _currentIndex;
-      await playFromPlaylist(_currentIndex);
-      _notifyListeners();
+    } else {
+      _currentIndex = 0;
     }
+    songDetails!.selectedIndex = _currentIndex;
+    await playFromPlaylist(_currentIndex);
+    _notifyListeners();
   }
 
   Future<void> previousSong() async {
     if (_currentIndex - 1 >= 0) {
       _currentIndex--;
-      songDetails!.selectedIndex = _currentIndex;
-      await playFromPlaylist(_currentIndex);
-      _notifyListeners();
+    } else {
+      _currentIndex = _songs.length - 1;
     }
+    songDetails!.selectedIndex = _currentIndex;
+    await playFromPlaylist(_currentIndex);
+    _notifyListeners();
   }
 
   void seek(Duration position) {
