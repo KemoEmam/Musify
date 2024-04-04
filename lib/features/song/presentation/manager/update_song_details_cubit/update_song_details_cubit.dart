@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:meta/meta.dart';
 import 'package:musicfy/core/utils/audio_player_service.dart';
 import 'package:musicfy/features/home/data/models/song_details_model.dart';
+import 'package:on_audio_query/on_audio_query.dart';
 
 part 'update_song_details_state.dart';
 
@@ -61,6 +62,20 @@ class UpdateSongDetailsCubit extends Cubit<UpdateSongDetailsState> {
         currentIndex: currentState.currentIndex,
         isPlaying: currentState.isPlaying,
       ));
+    }
+  }
+
+  List<SongModel> getLikedSongs() {
+    if (state is UpdateSongDetailsSuccess) {
+      final currentState = state as UpdateSongDetailsSuccess;
+      // Assuming currentState.songDetails.songs is a List<SongModel>
+      return currentState.songDetails.songs
+          .where((song) => _likedSongsIndices
+              .contains(currentState.songDetails.songs.indexOf(song)))
+          .toList();
+    } else {
+      // Return an empty list or handle the case where the state is not UpdateSongDetailsSuccess
+      return [];
     }
   }
 

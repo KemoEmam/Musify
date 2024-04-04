@@ -28,7 +28,6 @@ class SongsItemWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   QueryArtworkWidget(
-                    //remove one of these
                     artworkHeight: MediaQuery.of(context).size.height * 0.4,
                     format: ArtworkFormat.PNG,
                     artworkWidth: double.infinity,
@@ -77,6 +76,7 @@ class SongsItemWidget extends StatelessWidget {
                           ],
                         ),
                         SongLikeButton(
+                          songDetails: currentSongDetails,
                           isLiked: isLiked,
                           currentIndex: currentIndex,
                         )
