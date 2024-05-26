@@ -17,29 +17,39 @@ class FavouritesListView extends StatelessWidget {
     if (currentState is UpdateSongDetailsSuccess) {
       fullSongList = currentState.songDetails.songs;
     }
-    return ListView.builder(
-      itemCount: likedSongs.length,
-      itemBuilder: (context, index) {
-        final song = likedSongs[index];
-        return GestureDetector(
-          onTap: () async {
-            final originalIndex = fullSongList.indexOf(song);
-            if (originalIndex != -1) {
-              BlocProvider.of<PauseResumeCubit>(context).playSong(
-                  SongDetailsModel(
-                      songs: fullSongList, selectedIndex: originalIndex));
+    return likedSongs.isEmpty
+        ? const Center(
+            child: Opacity(
+              opacity: .3,
+              child: Text(
+                'Your favourite songs will be added here',
+                style: TextStyle(fontSize: 16),
+              ),
+            ),
+          )
+        : ListView.builder(
+            itemCount: likedSongs.length,
+            itemBuilder: (context, index) {
+              final song = likedSongs[index];
+              return GestureDetector(
+                onTap: () async {
+                  final originalIndex = fullSongList.indexOf(song);
+                  if (originalIndex != -1) {
+                    BlocProvider.of<PauseResumeCubit>(context).playSong(
+                        SongDetailsModel(
+                            songs: fullSongList, selectedIndex: originalIndex));
 
-              Navigator.pop(context);
-            }
-          },
-          child: PlaylistCardItemWidget(
-            type: ArtworkType.AUDIO,
-            id: song.id,
-            songName: song.title,
-            artistName: song.artist ?? 'Unknown Artist',
-          ),
-        );
-      },
-    );
+                    Navigator.pop(context);
+                  }
+                },
+                child: PlaylistCardItemWidget(
+                  type: ArtworkType.AUDIO,
+                  id: song.id,
+                  songName: song.title,
+                  artistName: song.artist ?? 'Unknown Artist',
+                ),
+              );
+            },
+          );
   }
 }
