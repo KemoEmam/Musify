@@ -4,6 +4,7 @@ import 'package:meta/meta.dart';
 import 'package:musicfy/core/utils/audio_player_service.dart';
 import 'package:musicfy/features/home/data/models/song_details_model.dart';
 import 'package:on_audio_query/on_audio_query.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'update_song_details_state.dart';
 
@@ -21,6 +22,20 @@ class UpdateSongDetailsCubit extends Cubit<UpdateSongDetailsState> {
     if (_audioPlayerService.songDetails != null) {
       _onAudioPlayerChange();
     }
+    _loadLikedSongs();
+  }
+
+  Future<void> _saveLikedSongs() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(
+        'likedSongs', _likedSongsIndices.map((e) => e.toString()).toList());
+  }
+
+  Future<void> _loadLikedSongs() async {
+    final prefs = await SharedPreferences.getInstance();
+    final likedSongs = prefs.getStringList('likedSongs') ?? [];
+    _likedSongsIndices.addAll(likedSongs.map((e) => int.parse(e)));
+    emit(state); // Re-emit the current state to update the UI
   }
 
   void _onAudioPlayerChange() {
@@ -56,7 +71,7 @@ class UpdateSongDetailsCubit extends Cubit<UpdateSongDetailsState> {
       } else {
         _likedSongsIndices.add(songIndex);
       }
-
+      _saveLikedSongs(); // Save liked songs whenever they are toggled
       emit(UpdateSongDetailsSuccess(
         songDetails: currentState.songDetails,
         currentIndex: currentState.currentIndex,
@@ -68,13 +83,11 @@ class UpdateSongDetailsCubit extends Cubit<UpdateSongDetailsState> {
   List<SongModel> getLikedSongs() {
     if (state is UpdateSongDetailsSuccess) {
       final currentState = state as UpdateSongDetailsSuccess;
-      // Assuming currentState.songDetails.songs is a List<SongModel>
       return currentState.songDetails.songs
           .where((song) => _likedSongsIndices
               .contains(currentState.songDetails.songs.indexOf(song)))
           .toList();
     } else {
-      // Return an empty list or handle the case where the state is not UpdateSongDetailsSuccess
       return [];
     }
   }

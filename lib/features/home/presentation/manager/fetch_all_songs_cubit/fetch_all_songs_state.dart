@@ -18,3 +18,9 @@ final class FetchAllSongsFailure extends FetchAllSongsState {
 }
 
 final class FetchAllSongsLoading extends FetchAllSongsState {}
+
+final class FetchAllSongsPermissionDenied extends FetchAllSongsState {
+  final String errMessage;
+
+  FetchAllSongsPermissionDenied({required this.errMessage});
+}

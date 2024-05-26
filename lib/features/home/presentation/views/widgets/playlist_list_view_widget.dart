@@ -38,7 +38,7 @@ class PlaylistListViewWidget extends StatelessWidget {
                   ),
                 );
               });
-        } else if (state is FetchAllSongsFailure) {
+        } else if (state is FetchAllSongsPermissionDenied) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -52,6 +52,26 @@ class PlaylistListViewWidget extends StatelessWidget {
                   child: Text('Retry',
                       style: TextStyle(
                           color: Theme.of(context).colorScheme.inversePrimary)),
+                ),
+              ],
+            ),
+          );
+        } else if (state is FetchAllSongsFailure) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(state.errMessage),
+                ElevatedButton(
+                  onPressed: () {
+                    BlocProvider.of<FetchAllSongsCubit>(context)
+                        .chooseDefaultSongsPath();
+                  },
+                  child: Text(
+                    'Choose Default Songs Path',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.inversePrimary),
+                  ),
                 ),
               ],
             ),

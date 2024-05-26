@@ -20,8 +20,22 @@ class FetchAllSongsCubit extends Cubit<FetchAllSongsState> {
         emit(FetchAllSongsFailure(errMessage: 'No songs found on the device.'));
       }
     } catch (e) {
-      emit(FetchAllSongsFailure(
+      emit(FetchAllSongsPermissionDenied(
           errMessage: 'Access Denied, tap to grant access.'));
+    }
+  }
+
+  Future<void> chooseDefaultSongsPath() async {
+    final selectedPath = await homeRepo.chooseDefaultSongsPath();
+    if (selectedPath != null) {
+      final songList = await homeRepo.querySongsFromDirectory(selectedPath);
+      if (songList.isNotEmpty) {
+        emit(FetchAllSongsSuccess(songList));
+      } else {
+        emit(FetchAllSongsFailure(
+            errMessage:
+                'The folder you specified doesn\'t contain songs or is empty.'));
+      }
     }
   }
 }

@@ -19,10 +19,13 @@ class DarkLightCubit extends Cubit<DarkLightState> {
     }
   }
 
-  void toggleTheme() {
+  void toggleTheme() async {
+    final prefs = await SharedPreferences.getInstance();
     if (state is LightThemeState) {
+      await prefs.setBool('isDarkMode', true);
       emit(DarkThemeState());
     } else {
+      await prefs.setBool('isDarkMode', false);
       emit(LightThemeState());
     }
   }
