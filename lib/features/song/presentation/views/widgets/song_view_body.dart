@@ -8,23 +8,32 @@ import 'package:musicfy/features/song/presentation/views/widgets/songs_item_widg
 class SongViewBody extends StatelessWidget {
   const SongViewBody({
     super.key,
-    required this.sonngDetails,
+    required this.songDetails,
   });
 
-  final SongDetailsModel sonngDetails;
+  final SongDetailsModel songDetails;
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SongsAppBarWidget(),
-        SongsItemWidget(
-          songDetails: sonngDetails,
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+        child: Column(
+          children: [
+            const SongsAppBarWidget(),
+            SongsItemWidget(
+              songDetails: songDetails,
+            ),
+            const SizedBox(height: 20), // Added spacing
+            const SongSlideBarWidget(),
+            PlaybackActionsWidget(
+              songDetails: songDetails,
+            ),
+          ],
         ),
-        const SongSlideBarWidget(),
-        PlaybackActionsWidget(
-          songDetails: sonngDetails,
-        )
-      ],
+      ),
     );
   }
 }

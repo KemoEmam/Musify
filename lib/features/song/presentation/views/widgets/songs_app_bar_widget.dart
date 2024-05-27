@@ -39,7 +39,6 @@ class SongsAppBarWidget extends StatelessWidget {
                 value: 'GoToFavourites',
                 child: Text('Go to favourites'),
               ),
-              // Add other PopupMenuItems for different options as needed
             ],
           ),
         ],

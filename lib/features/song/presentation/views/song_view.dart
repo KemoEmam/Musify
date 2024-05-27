@@ -11,7 +11,7 @@ class SongView extends StatelessWidget {
     final songDetails = GoRouterState.of(context).extra as SongDetailsModel;
     return Scaffold(
       body: SongViewBody(
-        sonngDetails: songDetails,
+        songDetails: songDetails,
       ),
     );
   }

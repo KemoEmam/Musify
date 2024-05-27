@@ -21,24 +21,26 @@ class SongsItemWidget extends StatelessWidget {
           final isLiked =
               context.read<UpdateSongDetailsCubit>().isSongLiked(currentIndex);
           return SizedBox(
-            height: MediaQuery.of(context).size.height * 0.51,
+            height: MediaQuery.of(context).size.height * 0.5,
             width: MediaQuery.of(context).size.width * 0.83,
             child: NeuBoxWidget(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  QueryArtworkWidget(
-                    artworkHeight: MediaQuery.of(context).size.height * 0.4,
-                    format: ArtworkFormat.PNG,
-                    artworkWidth: double.infinity,
-                    artworkQuality: FilterQuality.high,
-                    artworkBorder: BorderRadius.circular(12),
-                    id: currentSongDetails
-                        .songs[currentSongDetails.selectedIndex].id,
-                    type: ArtworkType.AUDIO,
-                    nullArtworkWidget: const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 14),
-                      child: Icon(Icons.music_note, size: 250),
+                  Flexible(
+                    child: QueryArtworkWidget(
+                      artworkHeight: MediaQuery.of(context).size.height * 0.4,
+                      format: ArtworkFormat.PNG,
+                      artworkWidth: double.infinity,
+                      artworkQuality: FilterQuality.high,
+                      artworkBorder: BorderRadius.circular(12),
+                      id: currentSongDetails
+                          .songs[currentSongDetails.selectedIndex].id,
+                      type: ArtworkType.AUDIO,
+                      nullArtworkWidget: const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 14),
+                        child: Icon(Icons.music_note, size: 250),
+                      ),
                     ),
                   ),
                   Padding(
@@ -46,34 +48,37 @@ class SongsItemWidget extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.6,
-                              child: Text(
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                currentSongDetails
-                                    .songs[currentSongDetails.selectedIndex]
-                                    .title
-                                    .toString(),
-                                style: Styles.textStyle16.copyWith(
-                                  fontWeight: FontWeight.bold,
+                        Flexible(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.6,
+                                child: Text(
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  currentSongDetails
+                                      .songs[currentSongDetails.selectedIndex]
+                                      .title
+                                      .toString(),
+                                  style: Styles.textStyle16.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Opacity(
-                              opacity: 0.4,
-                              child: Text(
-                                currentSongDetails
-                                        .songs[currentSongDetails.selectedIndex]
-                                        .artist ??
-                                    'Unknown Artist',
-                                style: Styles.textStyle14,
+                              Opacity(
+                                opacity: 0.4,
+                                child: Text(
+                                  currentSongDetails
+                                          .songs[
+                                              currentSongDetails.selectedIndex]
+                                          .artist ??
+                                      'Unknown Artist',
+                                  style: Styles.textStyle14,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                         SongLikeButton(
                           songDetails: currentSongDetails,
