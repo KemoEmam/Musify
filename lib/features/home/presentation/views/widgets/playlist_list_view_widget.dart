@@ -17,7 +17,6 @@ class PlaylistListViewWidget extends StatelessWidget {
       builder: (context, state) {
         if (state is FetchAllSongsSuccess) {
           return ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
               itemCount: state.songs.length,
               itemBuilder: (context, index) {
                 return GestureDetector(
