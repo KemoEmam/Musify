@@ -4,7 +4,7 @@
 Musify is a versatile music player app designed to provide an exceptional listening experience, allowing users to play their favorite tunes effortlessly. The app offers seamless access to your entire music library stored on your device through an intuitive and user-friendly playlist interface. Experience song details in a sleek Neumorphism design, complete with album covers, song names, and artist information, all paired with easy-to-use playback controls. Key features include an auto-repeat button for continuous listening and a 'like' button to mark and easily revisit your favorite tracks, stored in a dedicated Favorites page. Musify also includes a dark mode for comfortable use in low-light environments, complemented by immersive animations for an enhanced user experience.
 
 ## Features
-- Seamless Music Playback**: Effortlessly play your favorite tunes anytime, anywhere.
+- **Seamless Music Playback**: Effortlessly play your favorite tunes anytime, anywhere.
 - **Intuitive Playlist Interface**: Quickly access your entire music library stored on your device.
 - **Favorite Tracks**: Use the 'like' button to mark and access favorite tracks from the Favorites page.
 - **Auto-Repeat Button**: Enjoy uninterrupted music with the auto-repeat feature.
