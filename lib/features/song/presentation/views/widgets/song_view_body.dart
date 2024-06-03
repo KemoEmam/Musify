@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:musicfy/features/home/data/models/song_details_model.dart';
 import 'package:musicfy/features/song/presentation/views/widgets/playback_actions_widget.dart';
-import 'package:musicfy/features/song/presentation/views/widgets/song_slide_bar_widget.dart';
+import 'package:musicfy/features/song/presentation/views/widgets/song_slide_bar_component.dart';
 import 'package:musicfy/features/song/presentation/views/widgets/songs_app_bar_widget.dart';
 import 'package:musicfy/features/song/presentation/views/widgets/songs_item_widget.dart';
 
@@ -27,7 +27,7 @@ class SongViewBody extends StatelessWidget {
               songDetails: songDetails,
             ),
             const SizedBox(height: 20), // Added spacing
-            const SongSlideBarWidget(),
+            const SongSlideBarComponent(),
             PlaybackActionsWidget(
               songDetails: songDetails,
             ),

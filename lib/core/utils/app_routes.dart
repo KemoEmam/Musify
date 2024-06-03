@@ -11,12 +11,13 @@ abstract class AppRoutes {
   static const homeRoute = '/home';
   static const settingsRoute = '/settings';
   static const songRoute = '/song';
+  static const songRouteFromMiniPlayer = '/songFromMiniPlayer';
   static const favouritesRoute = '/favourites';
 
   static final router = GoRouter(
     routes: [
       GoRoute(
-        path: '/',
+        path: splashRoute,
         pageBuilder: (context, state) {
           return CustomTransitionPage<void>(
             key: state.pageKey,
@@ -30,7 +31,7 @@ abstract class AppRoutes {
         },
       ),
       GoRoute(
-        path: '/home',
+        path: homeRoute,
         pageBuilder: (context, state) {
           return CustomTransitionPage<void>(
             key: state.pageKey,
@@ -44,11 +45,13 @@ abstract class AppRoutes {
         },
       ),
       GoRoute(
-        path: '/song',
+        path: songRoute,
         pageBuilder: (context, state) {
           return CustomTransitionPage<void>(
             key: state.pageKey,
-            child: const SongView(),
+            child: SongView(
+                // songDetails: state.extra as SongDetailsModel,
+                ),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {
               return FadeTransition(opacity: animation, child: child);
@@ -58,7 +61,17 @@ abstract class AppRoutes {
         },
       ),
       GoRoute(
-        path: '/settings',
+        path: songRouteFromMiniPlayer,
+        pageBuilder: (context, state) {
+          return SlideFromBottomPageRoute<void>(
+            page: SongView(
+                // songDetails: state.extra as SongDetailsModel,
+                ),
+          );
+        },
+      ),
+      GoRoute(
+        path: settingsRoute,
         pageBuilder: (context, state) {
           return CustomTransitionPage<void>(
             key: state.pageKey,
@@ -72,7 +85,7 @@ abstract class AppRoutes {
         },
       ),
       GoRoute(
-        path: '/favourites',
+        path: favouritesRoute,
         pageBuilder: (context, state) {
           return CustomTransitionPage<void>(
             key: state.pageKey,
@@ -87,4 +100,27 @@ abstract class AppRoutes {
       ),
     ],
   );
+}
+
+class SlideFromBottomPageRoute<T> extends CustomTransitionPage<T> {
+  final Widget page;
+
+  SlideFromBottomPageRoute({required this.page})
+      : super(
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            const begin = Offset(0.0, 1.0);
+            const end = Offset.zero;
+            const curve = Curves.easeInOut;
+
+            var tween =
+                Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            var offsetAnimation = animation.drive(tween);
+
+            return SlideTransition(
+              position: offsetAnimation,
+              child: child,
+            );
+          },
+          child: page,
+        );
 }
