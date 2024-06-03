@@ -21,8 +21,8 @@ class MiniPlayer extends StatelessWidget {
           return Container(
             padding: const EdgeInsets.all(8.0),
             decoration: BoxDecoration(
-              color: theme.colorScheme.background, // Background color
-              borderRadius: BorderRadius.circular(30.0), // Rounded corners
+              color: theme.colorScheme.background,
+              borderRadius: BorderRadius.circular(30.0),
               boxShadow: [
                 BoxShadow(
                   color: theme.colorScheme.inversePrimary.withOpacity(0.2),
@@ -81,13 +81,17 @@ class MiniPlayer extends StatelessWidget {
                           sliderState.totalDuration.inSeconds.toDouble();
                       final positionInSeconds =
                           sliderState.currentDuration.inSeconds.toDouble();
-                      final progress = positionInSeconds / durationInSeconds;
+                      final progress = durationInSeconds != 0
+                          ? positionInSeconds / durationInSeconds
+                          : 0;
+
+                      final safeProgress = progress.isFinite ? progress : 0.0;
 
                       return Stack(
                         alignment: Alignment.center,
                         children: [
                           CircularProgressIndicator(
-                            value: progress,
+                            value: safeProgress.toDouble(),
                             backgroundColor:
                                 colorScheme.onBackground.withOpacity(0.2),
                             valueColor: const AlwaysStoppedAnimation<Color>(
@@ -118,7 +122,7 @@ class MiniPlayer extends StatelessWidget {
                         alignment: Alignment.center,
                         children: [
                           CircularProgressIndicator(
-                            value: 0.0, // Initial progress value
+                            value: 0.0,
                             backgroundColor:
                                 colorScheme.onBackground.withOpacity(0.2),
                             valueColor: const AlwaysStoppedAnimation<Color>(

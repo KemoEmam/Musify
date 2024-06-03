@@ -17,26 +17,29 @@ class PlaylistListViewWidget extends StatelessWidget {
       builder: (context, state) {
         if (state is FetchAllSongsSuccess) {
           return ListView.builder(
-              itemCount: state.songs.length,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () async {
-                    BlocProvider.of<PauseResumeCubit>(context).playSong(
-                        SongDetailsModel(
-                            songs: state.songs, selectedIndex: index));
+            itemCount: state.songs.length,
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () async {
+                  BlocProvider.of<PauseResumeCubit>(context).playSong(
+                    SongDetailsModel(songs: state.songs, selectedIndex: index),
+                  );
 
-                    GoRouter.of(context).push(AppRoutes.songRoute,
-                        extra: SongDetailsModel(
-                            songs: state.songs, selectedIndex: index));
-                  },
-                  child: PlaylistCardItemWidget(
-                    type: ArtworkType.AUDIO,
-                    id: state.songs[index].id,
-                    songName: state.songs[index].title,
-                    artistName: state.songs[index].artist ?? 'Unknown Artist',
-                  ),
-                );
-              });
+                  GoRouter.of(context).push(
+                    AppRoutes.songRoute,
+                    extra: SongDetailsModel(
+                        songs: state.songs, selectedIndex: index),
+                  );
+                },
+                child: PlaylistCardItemWidget(
+                  type: ArtworkType.AUDIO,
+                  id: state.songs[index].id,
+                  songName: state.songs[index].title,
+                  artistName: state.songs[index].artist ?? 'Unknown Artist',
+                ),
+              );
+            },
+          );
         } else if (state is FetchAllSongsPermissionDenied) {
           return Center(
             child: Column(
@@ -48,9 +51,11 @@ class PlaylistListViewWidget extends StatelessWidget {
                     BlocProvider.of<FetchAllSongsCubit>(context)
                         .fetchAllSongs();
                   },
-                  child: Text('Retry',
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.inversePrimary)),
+                  child: Text(
+                    'Retry',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.inversePrimary),
+                  ),
                 ),
               ],
             ),
