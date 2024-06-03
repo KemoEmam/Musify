@@ -49,9 +49,7 @@ abstract class AppRoutes {
         pageBuilder: (context, state) {
           return CustomTransitionPage<void>(
             key: state.pageKey,
-            child: SongView(
-                // songDetails: state.extra as SongDetailsModel,
-                ),
+            child: const SongView(),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {
               return FadeTransition(opacity: animation, child: child);
@@ -64,9 +62,7 @@ abstract class AppRoutes {
         path: songRouteFromMiniPlayer,
         pageBuilder: (context, state) {
           return SlideFromBottomPageRoute<void>(
-            page: SongView(
-                // songDetails: state.extra as SongDetailsModel,
-                ),
+            page: const SongView(),
           );
         },
       ),
