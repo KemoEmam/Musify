@@ -9,81 +9,43 @@ import 'package:musicfy/features/song/presentation/manager/pause_resume_cubit/pa
 import 'package:on_audio_query/on_audio_query.dart';
 
 class PlaylistListViewWidget extends StatelessWidget {
-  const PlaylistListViewWidget({super.key});
+  final List<SongModel> songs;
+  const PlaylistListViewWidget({super.key, required this.songs});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FetchAllSongsCubit, FetchAllSongsState>(
-      builder: (context, state) {
-        if (state is FetchAllSongsSuccess) {
-          return ListView.builder(
-            itemCount: state.songs.length,
-            itemBuilder: (context, index) {
-              return GestureDetector(
-                onTap: () async {
-                  BlocProvider.of<PauseResumeCubit>(context).playSong(
-                    SongDetailsModel(songs: state.songs, selectedIndex: index),
-                  );
-
-                  GoRouter.of(context).push(
-                    AppRoutes.songRoute,
-                    extra: SongDetailsModel(
-                        songs: state.songs, selectedIndex: index),
-                  );
-                },
-                child: PlaylistCardItemWidget(
-                  type: ArtworkType.AUDIO,
-                  id: state.songs[index].id,
-                  songName: state.songs[index].title,
-                  artistName: state.songs[index].artist ?? 'Unknown Artist',
-                ),
-              );
-            },
-          );
-        } else if (state is FetchAllSongsPermissionDenied) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(state.errMessage),
-                ElevatedButton(
-                  onPressed: () {
-                    BlocProvider.of<FetchAllSongsCubit>(context)
-                        .fetchAllSongs();
-                  },
-                  child: Text(
-                    'Retry',
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.inversePrimary),
-                  ),
-                ),
-              ],
-            ),
-          );
-        } else if (state is FetchAllSongsFailure) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(state.errMessage),
-                ElevatedButton(
-                  onPressed: () {
-                    BlocProvider.of<FetchAllSongsCubit>(context)
-                        .chooseDefaultSongsPath();
-                  },
-                  child: Text(
-                    'Choose Default Songs Path',
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.inversePrimary),
-                  ),
-                ),
-              ],
-            ),
-          );
-        } else {
-          return const Center(child: CircularProgressIndicator());
-        }
+    return RefreshIndicator(
+      onRefresh: () async {
+        await BlocProvider.of<FetchAllSongsCubit>(context).fetchAllSongs();
       },
+      child: SizedBox(
+        height:
+            MediaQuery.of(context).size.height, // Adjust the height as needed
+        child: ListView.builder(
+          physics: const AlwaysScrollableScrollPhysics(),
+          itemCount: songs.length,
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () async {
+                BlocProvider.of<PauseResumeCubit>(context).playSong(
+                  SongDetailsModel(songs: songs, selectedIndex: index),
+                );
+
+                GoRouter.of(context).push(
+                  AppRoutes.songRoute,
+                  extra: SongDetailsModel(songs: songs, selectedIndex: index),
+                );
+              },
+              child: PlaylistCardItemWidget(
+                type: ArtworkType.AUDIO,
+                id: songs[index].id,
+                songName: songs[index].title,
+                artistName: songs[index].artist ?? 'Unknown Artist',
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 }

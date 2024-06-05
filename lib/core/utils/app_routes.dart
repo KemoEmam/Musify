@@ -108,9 +108,14 @@ class SlideFromBottomPageRoute<T> extends CustomTransitionPage<T> {
             const end = Offset.zero;
             const curve = Curves.easeInOut;
 
+            var curvedAnimation = CurvedAnimation(
+              parent: animation,
+              curve: curve,
+            );
+
             var tween =
                 Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-            var offsetAnimation = animation.drive(tween);
+            var offsetAnimation = curvedAnimation.drive(tween);
 
             return SlideTransition(
               position: offsetAnimation,

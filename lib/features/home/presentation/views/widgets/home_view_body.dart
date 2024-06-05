@@ -17,48 +17,89 @@ class HomeViewBody extends StatelessWidget {
     return BlocProvider(
       create: (context) => SongSliderCubit(),
       child: SafeArea(
-        child: Stack(
-          children: [
-            NestedScrollView(
-              headerSliverBuilder: (context, innerBoxIsScrolled) {
-                return [
-                  const SliverToBoxAdapter(
-                    child: HomeAppBarWidget(),
-                  ),
-                ];
-              },
-              body: RefreshIndicator(
-                onRefresh: () async {
-                  await BlocProvider.of<FetchAllSongsCubit>(context)
-                      .fetchAllSongs();
-                },
-                child: const PlaylistListViewWidget(),
-              ),
-            ),
-            BlocBuilder<FetchAllSongsCubit, FetchAllSongsState>(
-              builder: (context, state) {
-                if (state is FetchAllSongsSuccess) {
-                  return Positioned(
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    child: GestureDetector(
-                      onTap: () {
-                        GoRouter.of(context).push(
-                          AppRoutes.songRouteFromMiniPlayer,
-                          extra: SongDetailsModel(
-                              songs: state.songs, selectedIndex: 0),
-                        );
-                      },
-                      child: const MiniPlayer(),
+        child: RefreshIndicator(
+          onRefresh: () async {
+            await BlocProvider.of<FetchAllSongsCubit>(context).fetchAllSongs();
+          },
+          child: Stack(
+            children: [
+              NestedScrollView(
+                headerSliverBuilder: (context, innerBoxIsScrolled) {
+                  return [
+                    const SliverToBoxAdapter(
+                      child: HomeAppBarWidget(),
                     ),
-                  );
-                }
-                return const SizedBox.shrink();
-              },
-            ),
-          ],
+                  ];
+                },
+                body: BlocBuilder<FetchAllSongsCubit, FetchAllSongsState>(
+                  builder: (context, state) {
+                    if (state is FetchAllSongsSuccess) {
+                      return PlaylistListViewWidget(
+                        songs: state.songs,
+                      );
+                    } else if (state is FetchAllSongsPermissionDenied) {
+                      return _buildErrorState(
+                        context,
+                        state.errMessage,
+                        () => BlocProvider.of<FetchAllSongsCubit>(context)
+                            .fetchAllSongs(),
+                      );
+                    } else if (state is FetchAllSongsFailure) {
+                      return _buildErrorState(
+                        context,
+                        state.errMessage,
+                        () => BlocProvider.of<FetchAllSongsCubit>(context)
+                            .chooseDefaultSongsPath(),
+                      );
+                    } else {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                  },
+                ),
+              ),
+              BlocBuilder<FetchAllSongsCubit, FetchAllSongsState>(
+                builder: (context, state) {
+                  if (state is FetchAllSongsSuccess) {
+                    return Positioned(
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      child: GestureDetector(
+                        onTap: () {
+                          GoRouter.of(context).push(
+                            AppRoutes.songRouteFromMiniPlayer,
+                            extra: SongDetailsModel(
+                                songs: state.songs, selectedIndex: 0),
+                          );
+                        },
+                        child: const MiniPlayer(),
+                      ),
+                    );
+                  }
+                  return const SizedBox.shrink();
+                },
+              ),
+            ],
+          ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildErrorState(
+      BuildContext context, String message, VoidCallback retry) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(message),
+          ElevatedButton(
+            onPressed: retry,
+            child: Text('Retry',
+                style: TextStyle(
+                    color: Theme.of(context).colorScheme.inversePrimary)),
+          ),
+        ],
       ),
     );
   }
