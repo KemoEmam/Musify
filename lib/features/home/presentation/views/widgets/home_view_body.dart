@@ -95,7 +95,7 @@ class HomeViewBody extends StatelessWidget {
           Text(message),
           ElevatedButton(
             onPressed: retry,
-            child: Text('Retry',
+            child: Text('Choose default songs path',
                 style: TextStyle(
                     color: Theme.of(context).colorScheme.inversePrimary)),
           ),
