@@ -2,15 +2,14 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:musicfy/features/home/data/repos/home_repo.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'dart:io' show Platform; // Used for checking the platform
-import 'package:file_picker/file_picker.dart'; // Add this import
+import 'dart:io' show Platform;
+import 'package:file_picker/file_picker.dart';
 
 class HomeRepoImpl implements HomeRepo {
   final OnAudioQuery audioQuery = OnAudioQuery();
 
   @override
   Future<List<SongModel>> fetchAllSongs() async {
-    // Ensure permission is requested and granted before proceeding
     var permissionStatus = await requestPermission();
     if (permissionStatus != PermissionStatus.granted) {
       throw Exception('Storage permission not granted');
@@ -50,7 +49,12 @@ class HomeRepoImpl implements HomeRepo {
     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
     int? apiLevel = androidInfo.version.sdkInt;
 
-    if (Platform.isAndroid && apiLevel >= 33) {
+    if (Platform.isAndroid && apiLevel >= 34) {
+      status = await Permission.audio.status;
+      if (!status.isGranted) {
+        status = await Permission.audio.request();
+      }
+    } else if (Platform.isAndroid && apiLevel >= 33) {
       status = await Permission.audio.status;
       if (!status.isGranted) {
         status = await Permission.audio.request();
