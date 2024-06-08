@@ -26,10 +26,4 @@ Musify is a versatile music player app designed to provide an exceptional listen
 <img src="https://github.com/KemoEmam/Musify/assets/122459156/2b732c4f-a233-4c33-bcd5-ae94e467b67d" alt="Screenshot 4" width="450"/>
 
 ### Screenshot 5
-<img src="https://github.com/KemoEmam/Musify/assets/122459156/701613fd-034a-4ba3-9ded-1312113d2e4c" alt="Screenshot 5" width="450"/>
-
-### Screenshot 6
-<img src="https://github.com/KemoEmam/Musify/assets/122459156/5df1219b-578c-4d61-8d61-2a835a647591" alt="Screenshot 6" width="450"/>
-
-### Screenshot 7
-<img src="https://github.com/KemoEmam/Musify/assets/122459156/cd091a62-c09f-4bf7-8ddd-caeed164a0a8" alt="Screenshot 7" width="450"/>
+<img src="https://github.com/KemoEmam/Musify/assets/122459156/cd091a62-c09f-4bf7-8ddd-caeed164a0a8" alt="Screenshot 5" width="450"/>
