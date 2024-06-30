@@ -14,22 +14,16 @@ Musify is a versatile music player app designed to provide an exceptional listen
 ## Screenshots
 
 ### Screenshot 1
-<img src="https://github.com/KemoEmam/Musify/assets/122459156/1a958456-8746-4429-aa24-3084be50b41e" alt="Screenshot 1" width="450"/>
+<img src="https://github.com/KemoEmam/Musify/assets/122459156/0f7ab63b-5353-452e-90f1-1a458da74c36" alt="Screenshot 1" width="450"/>
 
 ### Screenshot 2
-<img src="https://github.com/KemoEmam/Musify/assets/122459156/71ff8238-5cf5-441d-9c9d-e34feb302072" alt="Screenshot 2" width="450"/>
+<img src="https://github.com/KemoEmam/Musify/assets/122459156/e7f3f65e-e4f4-49da-b133-cbd4f36656e7" alt="Screenshot 2" width="450"/>
 
 ### Screenshot 3
-<img src="https://github.com/KemoEmam/Musify/assets/122459156/2412f162-6698-49d2-b387-5689a94f1ffc" alt="Screenshot 3" width="450"/>
+<img src="https://github.com/KemoEmam/Musify/assets/122459156/b82b09ea-0a6d-4784-8bdf-09ad60de5e6c" alt="Screenshot 3" width="450"/>
 
 ### Screenshot 4
-<img src="https://github.com/KemoEmam/Musify/assets/122459156/6cedf2bd-0544-468a-9d8d-6e46c0e7b198" alt="Screenshot 4" width="450"/>
+<img src="https://github.com/KemoEmam/Musify/assets/122459156/2b732c4f-a233-4c33-bcd5-ae94e467b67d" alt="Screenshot 4" width="450"/>
 
 ### Screenshot 5
-<img src="https://github.com/KemoEmam/Musify/assets/122459156/701613fd-034a-4ba3-9ded-1312113d2e4c" alt="Screenshot 5" width="450"/>
-
-### Screenshot 6
-<img src="https://github.com/KemoEmam/Musify/assets/122459156/5df1219b-578c-4d61-8d61-2a835a647591" alt="Screenshot 6" width="450"/>
-
-### Screenshot 7
-<img src="https://github.com/KemoEmam/Musify/assets/122459156/03fcd1bb-394e-47ee-bdc3-d1b8d8a3ef56" alt="Screenshot 7" width="450"/>
+<img src="https://github.com/KemoEmam/Musify/assets/122459156/cd091a62-c09f-4bf7-8ddd-caeed164a0a8" alt="Screenshot 5" width="450"/>
