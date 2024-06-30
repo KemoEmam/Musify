@@ -12,7 +12,7 @@ class AudioPlayerService {
   SongDetailsModel? songDetails;
 
   static const MethodChannel _channel =
-      MethodChannel('com.example.musicfy.audioplayer/audiofocus');
+      MethodChannel('com.karimelemam.musicfy.audioplayer/audiofocus');
 
   final AudioPlayer _audioPlayer = AudioPlayer();
   Duration _totalDuration = Duration.zero;

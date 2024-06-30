@@ -1,4 +1,4 @@
-package com.example.musicfy
+package com.karimelemam.musicfy
 
 import android.content.Context
 import android.media.AudioManager
@@ -20,7 +20,7 @@ class MainActivity: FlutterActivity() {
            audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
 
            // Set up the MethodChannel and handle method calls from Flutter
-           MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "com.example.musicfy.audioplayer/audiofocus").setMethodCallHandler { call, result ->
+           MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "com.karimelemam.musicfy.audioplayer/audiofocus").setMethodCallHandler { call, result ->
                when (call.method) {
                    "requestAudioFocus" -> {
                        // Create AudioAttributes
