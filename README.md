@@ -14,6 +14,8 @@ Musify is a versatile music player app designed to provide an exceptional listen
 ## Download
 [![Download Musify](https://img.shields.io/badge/Download-Musify-blue)](https://com-karimelemam-musicfy.en.uptodown.com/android)
 
+## Screenshots
+
 ### Screenshot 1
 <img src="https://github.com/KemoEmam/Musify/assets/122459156/0f7ab63b-5353-452e-90f1-1a458da74c36" alt="Screenshot 1" width="450"/>
 
